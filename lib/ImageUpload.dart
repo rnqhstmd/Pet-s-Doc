@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+import 'AnimalHospitalMap.dart';
 class ImageUploadScreen extends StatefulWidget {
   @override
   _ImageUploadScreenState createState() => _ImageUploadScreenState();
@@ -31,6 +33,11 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     }
   }
 
+  void _navigateToMap() {
+    // AnimalHospitalMap 화면으로 네비게이트
+    Navigator.push(context, MaterialPageRoute(builder: (context) => AnimalHospitalMap()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +57,11 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
             ElevatedButton(
               onPressed: _isUploading ? null : _pickImage,
               child: Text('이미지 선택'),
+            ),
+            SizedBox(height: 20),  // 버튼 간 간격 추가
+            ElevatedButton(
+              onPressed: _isUploading ? null : _navigateToMap,
+              child: Text('동물병원 지도 보기'),
             ),
           ],
         ),
