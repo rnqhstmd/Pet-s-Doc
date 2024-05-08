@@ -9,6 +9,7 @@ class ImageUploadScreen extends StatefulWidget {
 }
 
 class _ImageUploadScreenState extends State<ImageUploadScreen> {
+
   File? _image;
   final ImagePicker _picker = ImagePicker();
   bool _isUploading = false;

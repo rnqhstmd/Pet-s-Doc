@@ -50,7 +50,6 @@ class _AnimalHospitalMapState extends State<AnimalHospitalMap> {
     List<List<dynamic>> rows =
         const CsvToListConverter().convert(csvData, eol: '\n');
 
-    // 첫 번째 행을 건너뛰고 처리하거나 숫자인지 확인
     for (int i = 1; i < rows.length; i++) {
       List<dynamic> row = rows[i];
       try {
@@ -107,6 +106,7 @@ class _AnimalHospitalMapState extends State<AnimalHospitalMap> {
           zoom: 12,
         ),
         myLocationEnabled: _myLocationEnabled,  // 위치 기능 활성화
+        myLocationButtonEnabled: false,  // 기본 위치 버튼 비활성화
         markers: _markers,
       ),
       floatingActionButton: FloatingActionButton(

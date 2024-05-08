@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'ImageUpload.dart';
-import 'AppTemplate.dart'; // AppTemplate 클래스를 import
+import 'template/AppTemplate.dart'; // AppTemplate 클래스를 import
 
 enum BeautyChoice { eyes, skin }
 

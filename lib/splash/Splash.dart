@@ -1,6 +1,6 @@
 import 'package:asset/PetSelection.dart';
 import 'package:flutter/material.dart';
-import 'SkinEyeSelection.dart'; // 메인 화면으로 이동하기 위한 import
+import '../SkinEyeSelection.dart'; // 메인 화면으로 이동하기 위한 import
 
 class SplashScreen extends StatefulWidget {
   @override
