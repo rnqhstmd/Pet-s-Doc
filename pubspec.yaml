@@ -30,6 +30,9 @@ environment:
 dependencies:
   flutter:
       sdk: flutter
+
+  csv: ^5.0.0
+  permission_handler: ^8.3.0
   flutter_spinkit: ^5.1.0
   image_picker: ^0.8.4+4 # 최신 버전을 확인하고 사용하세요.
 
@@ -37,6 +40,9 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
+  google_maps_flutter: ^2.6.1
+  geolocator: ^11.0.0
+  location: ^6.0.1
 
 dev_dependencies:
   flutter_test:
@@ -58,13 +64,18 @@ flutter:
     - assets/images/logo.png
     - assets/images/dog.png
     - assets/images/cat.png
-
+    - assets/csv/AnimalHospital.csv
   fonts:
-    - family: Sunflower
-      fonts:
-        - asset: assets/fonts/Sunflower/Sunflower-Bold.ttf
-        - asset: assets/fonts/Sunflower/Sunflower-Light.ttf
-        - asset: assets/fonts/Sunflower/Sunflower-Medium.ttf
+      - family: Jua
+        fonts:
+          - asset: assets/fonts/Jua/Jua-Regular.ttf
+      - family: Sunflower
+        fonts:
+          - asset: assets/fonts/Sunflower/Sunflower-Bold.ttf
+          - asset: assets/fonts/Sunflower/Sunflower-Light.ttf
+          - asset: assets/fonts/Sunflower/Sunflower-Medium.ttf
+
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
