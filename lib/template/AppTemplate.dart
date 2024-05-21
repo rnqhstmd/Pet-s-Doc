@@ -1,55 +1,22 @@
 import 'package:flutter/material.dart';
-
-import '../AnimalHospitalMap.dart';
-import '../PetDictionayList.dart';
+import '../solution/PetDictionayList.dart';
 import '../PetSelection.dart';
+import '../AnimalHospitalMap.dart';
 
 class AppTemplate extends StatefulWidget {
   final int currentIndex;
-  final Widget bodyContent;  // 현재 페이지 내용을 위한 위젯
+  final Widget bodyContent;
 
-  AppTemplate({required this.currentIndex, required this.bodyContent});
+  AppTemplate({
+    required this.currentIndex,
+    required this.bodyContent,
+  });
 
   @override
   _AppTemplateState createState() => _AppTemplateState();
 }
 
 class _AppTemplateState extends State<AppTemplate> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Colors.white, Color(0xFF95D080)],
-          ),
-        ),
-        child: widget.bodyContent,  // 동적으로 내용을 받아서 표시
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: widget.currentIndex,
-        selectedItemColor: Colors.greenAccent,
-        onTap: _onItemTapped,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "홈",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: "펫과사전",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.my_location),
-            label: "주변 동물병원 찾기",
-          ),
-        ],
-      ),
-    );
-  }
-
   void _onItemTapped(int index) {
     if (index != widget.currentIndex) {
       Widget nextPage;
@@ -67,8 +34,45 @@ class _AppTemplateState extends State<AppTemplate> {
           return;
       }
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => AppTemplate(currentIndex: index, bodyContent: nextPage)),
+        MaterialPageRoute(builder: (context) => nextPage),
       );
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.white, Color(0xFF95D080)], // 그라디언트 배경색 설정
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0), // 원하는 크기의 마진을 설정
+          child: widget.bodyContent, // 이곳에 bodyContent를 넣습니다.
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: widget.currentIndex,
+        onTap: _onItemTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "홈",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu_book),
+            label: "펫과사전",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.local_hospital),
+            label: "주변 동물병원 찾기",
+          ),
+        ],
+      ),
+    );
   }
 }

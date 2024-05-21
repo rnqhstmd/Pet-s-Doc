@@ -1,5 +1,5 @@
-import 'package:asset/template/Disease.dart';
-import 'package:asset/template/DiseaseDetailTemplate.dart';
+import 'package:asset/solution/Disease.dart';
+import 'package:asset/solution/DiseaseDetailTemplate.dart';
 import 'package:flutter/material.dart';
 
 class PetDictionaryList extends StatefulWidget {
@@ -134,10 +134,8 @@ class _PetDictionaryListState extends State<PetDictionaryList> {
   }
 
   void searchDisease(String query) {
-    final results = diseases
-        .where((disease) =>
-            disease.name.toLowerCase().contains(query.toLowerCase()))
-        .toList();
+    final results = diseases.where((disease) =>
+        disease.name.toLowerCase().contains(query.toLowerCase())).toList();
     setState(() {
       filteredDiseases = results;
     });
@@ -147,29 +145,72 @@ class _PetDictionaryListState extends State<PetDictionaryList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("질병 목록"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              showSearch(context: context, delegate: DiseaseSearch(diseases));
-            },
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text("펫과사전", style: TextStyle(fontFamily:"Jua",fontWeight: FontWeight.normal)),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: TextField(
+              onTap: () {
+                showSearch(context: context, delegate: DiseaseSearch(diseases));
+              },
+              decoration: InputDecoration(
+                hintText: "궁금한 질병을 검색해 보세요",
+                hintStyle: TextStyle(fontFamily:"Jua",color: Colors.grey),
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.grey[200],
+                contentPadding: EdgeInsets.symmetric(vertical: 8), // 검색바 높이 조정
+              ),
+            ),
+          ),
+          SizedBox(height: 16), // 검색바와 리스트 사이의 간격 추가
+          Expanded(
+            child: ListView.builder(
+              itemCount: diseases.length,
+              itemBuilder: (context, index) {
+                return DiseaseCard(disease: diseases[index], context: context);
+              },
+            ),
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: filteredDiseases.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(filteredDiseases[index].name),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        DiseaseDetailPage(disease: filteredDiseases[index])),
-              );
-            },
+    );
+  }
+}
+
+class DiseaseCard extends StatelessWidget {
+  final Disease disease;
+  final BuildContext context;
+
+  DiseaseCard({required this.disease, required this.context});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2.0,
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      child: ListTile(
+        leading: Icon(Icons.healing, color: Theme.of(context).primaryColor),
+        title: Text(disease.name, style: TextStyle(fontFamily:"Jua",fontWeight: FontWeight.normal, fontSize: 20)),
+        subtitle: Text(disease.definition, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontFamily: "Jua"),),
+        trailing: Icon(Icons.arrow_forward_ios),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DiseaseDetailPage(disease: disease),
+            ),
           );
         },
       ),
@@ -183,12 +224,15 @@ class DiseaseSearch extends SearchDelegate<Disease?> {
   DiseaseSearch(this.diseases);
 
   @override
+  String get searchFieldLabel => '궁금한 질병을 검색해 보세요';
+
+  @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
         icon: Icon(Icons.clear),
         onPressed: () {
-          query = "";
+          query = '';
           showSuggestions(context);
         },
       ),
@@ -234,4 +278,3 @@ class DiseaseSearch extends SearchDelegate<Disease?> {
     );
   }
 }
-

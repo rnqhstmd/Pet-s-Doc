@@ -42,8 +42,9 @@ class _SkinEyeSelectionScreenState extends State<SkinEyeSelectionScreen> {
             child: Text(
               "3분만에 간단하게 진단받기!",
               style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+                fontFamily: "Jua",
+                fontSize: 30,
+                fontWeight: FontWeight.normal,
               ),
             ),
           ),
@@ -80,8 +81,8 @@ class _SkinEyeSelectionScreenState extends State<SkinEyeSelectionScreen> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 120,
-        height: 120,
+        width: 170,
+        height: 170,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -97,7 +98,7 @@ class _SkinEyeSelectionScreenState extends State<SkinEyeSelectionScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(icon, size: 60),
+            Icon(icon, size: 90),
             Text(label, style: TextStyle(fontSize: 18)),
           ],
         ),

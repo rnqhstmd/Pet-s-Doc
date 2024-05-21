@@ -38,8 +38,9 @@ class _PetSelectionScreenState extends State<PetSelectionScreen> {
               child: Text(
                 '당신의 반려동물을 선택하세요!',
                 style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
+                  fontFamily: "Jua",
+                  fontSize: 30,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
             ),
@@ -84,9 +85,9 @@ class _PetSelectionScreenState extends State<PetSelectionScreen> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
-            width: 100,
+            width: 170,
             // 컨테이너의 너비 설정
-            height: 100,
+            height: 170,
             // 컨테이너의 높이 설정
             decoration: BoxDecoration(
               // 여기에 원하는 디자인 추가 가능

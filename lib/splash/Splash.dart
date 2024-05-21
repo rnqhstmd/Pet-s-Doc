@@ -33,15 +33,15 @@ class _SplashScreenState extends State<SplashScreen> {
             ClipOval(
               child: Image.asset(
                 'assets/images/logo.png',
-                width: 100, // 로고의 크기를 조절
-                height: 100,
+                width: 170, // 로고의 크기를 조절
+                height: 170,
               ),
             ),
             SizedBox(height: 20), // 로고와 텍스트 사이의 공간을 추가
-            Text(
-              '펫스닥',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
+            // Text(
+            //   '펫스닥',
+            //   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            // ),
             // 앱 이름
           ],
         ),

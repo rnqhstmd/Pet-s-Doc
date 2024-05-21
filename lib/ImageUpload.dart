@@ -1,69 +1,120 @@
 import 'dart:io';
+import 'package:asset/template/AppTemplate.dart'; // 경로가 올바른지 확인하세요.
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'AnimalHospitalMap.dart';
+import 'AnalysisResult.dart'; // 이 파일의 경로도 확인하세요.
+
 class ImageUploadScreen extends StatefulWidget {
   @override
   _ImageUploadScreenState createState() => _ImageUploadScreenState();
 }
 
 class _ImageUploadScreenState extends State<ImageUploadScreen> {
-
   File? _image;
   final ImagePicker _picker = ImagePicker();
-  bool _isUploading = false;
 
-  Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source);
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
-        _isUploading = true;
       });
-
-      // TODO: 업로드 로직 구현
-      // 예: Cloud storage에 업로드하는 함수를 호출하고 완료 콜백을 기다립니다.
-
-      // 임시적으로 업로드가 '완료'되었다고 가정합니다.
-      // 실제로는 외부 서비스에 업로드 후 결과를 받아야 합니다.
-      await Future.delayed(Duration(seconds: 2)); // 로딩 시간 흉내
-      setState(() {
-        _isUploading = false;
-      });
+      // 결과 페이지로 이미지 파일을 전달
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => AnalysisResult(imageFile: _image!),
+        ),
+      );
     }
-  }
-
-  void _navigateToMap() {
-    // AnimalHospitalMap 화면으로 네비게이트
-    Navigator.push(context, MaterialPageRoute(builder: (context) => AnimalHospitalMap()));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('이미지 업로드'),
-      ),
-      body: Center(
+    // AppTemplate을 사용하여 레이아웃을 구성합니다.
+    return AppTemplate(
+      currentIndex: 0, // 현재 선택된 탭의 인덱스
+      bodyContent: _buildBodyContent(), // 본문 콘텐츠를 빌드하는 메서드를 분리합니다.
+    );
+  }
+
+  Widget _buildBodyContent() {
+    return Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.white,
+              Color(0xFF95D080),
+            ],
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: Text(
+                  "사진 한장으로 내 아이를 \n직접 체크해보세요! ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "Jua",
+
+                    fontSize: 30,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  _buildFeatureButton(
+                    label: '사진 업로드',
+                    icon: Icons.upload_rounded,
+                    onTap: () => _pickImage(ImageSource.gallery),
+                  ),
+                  _buildFeatureButton(
+                    label: '사진 촬영',
+                    icon: Icons.camera_alt_rounded,
+                    onTap: () => _pickImage(ImageSource.camera),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
+    );
+  }
+
+  Widget _buildFeatureButton({
+    required String label,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 170,
+        height: 170,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: Offset(0, 1), // 각 값에 적절한 오프셋 설정
+            ),
+          ],
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (_image != null)
-              Image.file(_image!)
-            else if (_isUploading)
-              CircularProgressIndicator()
-            else
-              Text('이미지를 업로드해주세요.'),
-            ElevatedButton(
-              onPressed: _isUploading ? null : _pickImage,
-              child: Text('이미지 선택'),
-            ),
-            SizedBox(height: 20),  // 버튼 간 간격 추가
-            ElevatedButton(
-              onPressed: _isUploading ? null : _navigateToMap,
-              child: Text('동물병원 지도 보기'),
-            ),
+            Icon(icon, size: 80),
+            Text(label, style: TextStyle(fontSize: 18)),
           ],
         ),
       ),

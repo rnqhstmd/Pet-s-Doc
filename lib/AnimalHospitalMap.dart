@@ -3,7 +3,6 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart'; // Google Maps 패키지 import
 import 'package:csv/csv.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:location/location.dart';
 
 class AnimalHospitalMap extends StatefulWidget {
   @override
